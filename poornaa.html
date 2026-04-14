@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <title>ai code review agent</title>
+        <style>
+            body{
+                margin: 0;
+            }
+  header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      padding: 10px 20px;
+      background: black;
+      color: white;
+      border:2px solid rgba(255, 255,255, 0.08);
+    }
+.logogroup{
+    display: flex;
+    align-items: center;
+    gap:10px;
+}
+.logo{
+    font-size: 28px;
+    color:#3b82f6;
+}
+.logotext{
+    font-size:24px;
+    font-weight: 700;
+    color: white;
+}
+
+
+.buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .signin, .signup {
+      padding: 8px 16px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .signin {
+      background: black;
+      color: white;
+      border: 1px solid gray;
+    }
+
+    .signup {
+      background: blue;
+      color: white;
+      border-radius: 6px;
+    }
+    .signin:hover{
+        color:white;
+    }
+    .signin:hover{
+        color:lightgray;
+    }
+    /* Main */
+.total {
+    padding: 20px;
+}
+
+.bb {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.select {
+    padding: 8px 12px;
+    background: #1a1a1a;
+    color: white;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.review {
+    padding: 8px 18px;
+    background: #3b82f6;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.review:hover {
+    background: #2563eb;
+}
+
+.both {
+    display: flex;
+    gap: 16px;
+    width: 100%;
+}
+
+.panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+}
+
+.input-label, .output-label {
+    color: rgba(255,255,255,0.7);
+    font-size: 14px;
+}
+
+.ta-input, .ta-output {
+    height: 400px;
+    width: 100%;
+    box-sizing: border-box;
+    background: #111;
+    color: white;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 14px;
+    font-family: 'Courier New', monospace;
+    resize: vertical;   
+}
+
+.ta-input:focus, .ta-output:focus {
+    outline: 1px solid #3b82f6;
+}
+
+/* Footer */
+footer {
+    background-color: black;
+    margin-top: 0px;
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 24px 20px;
+    text-align: center;
+    color: rgba(255,255,255,0.5);
+    font-size: 14px;
+}
+
+.footer-logo {
+    font-size: 18px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 4px;
+}
+
+.footer-tagline {
+    margin-bottom: 4px;
+}
+
+.footer-contact span {
+    color: #3b82f6;
+}
+/* Hero Section */
+.hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px 40px 20px;
+    text-align: center;
+    background: black;
+}
+
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 16px;
+    border: 1px solid rgba(0, 64, 212, 0.3);
+    border-radius: 100px;
+    color: rgba(0, 95, 212, 0.9);
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    margin-bottom: 24px;
+    background: rgba(0, 212, 170, 0.05);
+}
+
+.hero h1 {
+    font-size: 52px;
+    font-weight: 800;
+    color: white;
+    line-height: 1.2;
+    margin: 0 0 20px 0;
+}
+
+.hero h1 span {
+    color: #3b82f6;
+}
+
+.hero p {
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.6);
+    max-width: 560px;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero {
+        padding: 40px 16px 30px 16px;
+    }
+
+    .hero h1 {
+        font-size: 32px;
+    }
+
+    .hero p {
+        font-size: 15px;
+    }
+}
+  
+
+
+main {
+    background-color: black;
+    color: white;
+}
+
+.total {
+    background-color: black;
+}
+
+.bb {
+    background-color: black;
+}
+
+    
+
+        </style>
+    </head>
+    <body>
+        <!-- header --> 
+        <header>
+            <div class="logogroup">
+                <div class="logo">⬡</div>
+                <span class="logotext" >codeAI</span>
+            </div>
+           
+            <div class="buttons">
+                <button class="signin">Sign In</button>
+                <button class="signup">Sign Up</button>
+            </div>
+        </header>  
+        
+ <section class="hero">
+  <div class="hero-badge">AI-Powered · Real-time Review</div>
+  <h1>Review. Refine.<br><span>Ship better code.</span></h1>
+  <p>Paste your code, get instant AI feedback on bugs, style, and performance.</p>
+</section>
+
+
+        <!-- main content --> 
+        <main>
+            <div class="total">
+                <div class="bb">
+                 <div>
+        <select class="select">
+            <option value="js">java script</option>
+            <option value="python">Python</option>
+        <option value="typescript">TypeScript</option>
+        <option value="java">Java</option>
+        <option value="cpp">C++</option>
+        <option value="go">Go</option>
+        <option value="rust">Rust</option>
+        <option value="html">HTML/CSS</option>
+        <option value="sql">SQL</option>
+        <option value="other">Other</option>
+        </select>
+     </div>
+     <button class="review">Review my code</button>
+            </div>
+     <div class="both">
+        <!--input panel-->
+     <div class="panel">
+        <label class="input-label">Enter your code</label>
+        <textarea class="ta-input"></textarea>
+     </div>
+
+     <!--output panel-->
+     <div class="panel">
+        <label class="output-label">Output</label>
+        <textarea class="ta-output"></textarea>
+     </div>
+     </div>
+            </div>
+            
+            
+        </main>
+
+
+
+        <!-- footer --> 
+       <footer>
+    <p>⬡ codeAI</p>
+    <p>AI-powered code reviews for modern developers</p>
+    <p><span>Contact:</span>purnachandrika007@gmail.com</p>
+  </footer>
+                      <script>
+async function reviewCode() {
+    const inputBox = document.querySelector(".ta-input");
+    const outputBox = document.querySelector(".ta-output");
+
+    const code = inputBox.value;
+
+    if (!code.trim()) {
+        outputBox.value = "⚠️ Please enter some code first.";
+        return;
+    }
+
+    outputBox.value = "⏳ Reviewing your code...";
+
+    try {
+        const response = await fetch("http://127.0.0.1:8000/review", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ code: code })
+        });
+
+        const data = await response.json();
+
+        outputBox.value = data.review || data.error;
+
+    } catch (error) {
+        outputBox.value = "❌ Error connecting to server";
+    }
+}
+
+// connect button click
+document.querySelector(".review").addEventListener("click", reviewCode);
+</script>
+    </body>
+</html>
