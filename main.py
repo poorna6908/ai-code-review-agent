@@ -34,7 +34,7 @@ def review_code(data: CodeInput):
         prompt = f"Review this code:\n{data.code}"
 
         response = client.chat.completions.create(
-            model="llama-3.1-8b-instant",
+            model="openai/gpt-oss-20b",
             messages=[
                 {"role": "user", "content": prompt}
             ]
