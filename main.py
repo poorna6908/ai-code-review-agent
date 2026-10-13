@@ -20,7 +20,7 @@ app.add_middleware(
 client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
 # Model used for reviews. Keep this in sync with what you write in your portfolio.
-MODEL = "llama-3.3-70b-versatile"
+MODEL = "openai/gpt-oss-20b"
 
 SYSTEM_PROMPT = """You are a senior code reviewer. Respond in markdown with exactly these sections:
 
@@ -64,7 +64,8 @@ def review_code(data: CodeInput):
                 {"role": "user", "content": user_prompt},
             ],
             temperature=0.2,
-            max_completion_tokens=2048,
+            reasoning_effort="low",
+            max_completion_tokens=4096,
         )
 
         return {"review": response.choices[0].message.content}
