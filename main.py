@@ -19,30 +19,55 @@ app.add_middleware(
 # Load Groq API key
 client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
+# Model used for reviews. Keep this in sync with what you write in your portfolio.
+MODEL = "llama-3.3-70b-versatile"
+
+SYSTEM_PROMPT = """You are a senior code reviewer. Respond in markdown with exactly these sections:
+
+## Summary
+2-3 sentences on the overall quality of the code.
+
+## Issues Found
+A markdown table with columns: Severity | Issue | Fix
+Cover bugs, style problems and performance problems. Keep each cell short.
+
+## Improved Code
+One code block with the corrected version of the code.
+
+Be concise. Do not add any other sections, test checklists or long explanations."""
+
+
 # Input format
 class CodeInput(BaseModel):
     code: str
+    language: str = "unknown"
+
 
 @app.get("/")
 def home():
     return {"message": "API working"}
 
+
 # AI Code Review Endpoint
 @app.post("/review")
 def review_code(data: CodeInput):
     try:
-        prompt = f"Review this code:\n{data.code}"
-
-        response = client.chat.completions.create(
-            model="openai/gpt-oss-20b",
-            messages=[
-                {"role": "user", "content": prompt}
-            ]
+        user_prompt = (
+            f"Language: {data.language}\n\n"
+            f"Review this code:\n```{data.language}\n{data.code}\n```"
         )
 
-        return {
-            "review": response.choices[0].message.content
-        }
+        response = client.chat.completions.create(
+            model=MODEL,
+            messages=[
+                {"role": "system", "content": SYSTEM_PROMPT},
+                {"role": "user", "content": user_prompt},
+            ],
+            temperature=0.2,
+            max_completion_tokens=2048,
+        )
+
+        return {"review": response.choices[0].message.content}
 
     except Exception as e:
         return {"error": str(e)}
